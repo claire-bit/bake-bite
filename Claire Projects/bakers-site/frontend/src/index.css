@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #eb268f;       /* bright pink */
+  --color-primaryLight: #ff4fae;  /* lighter pink for hovers */
+  --color-softBlue: #eef5fd;      /* pastel blue background */
+  --color-deepBrown: #5a3e36;     /* chocolate brown for text */
+  --color-offWhite: #fefefe;      /* warm white */
+  --color-pureWhite: #ffffff;     /* pure white */
+}
