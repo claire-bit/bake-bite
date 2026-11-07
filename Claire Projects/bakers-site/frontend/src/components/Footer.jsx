@@ -1,4 +1,3 @@
-// src/components/Footer.jsx
 import React from "react";
 import {
   Mail,
@@ -12,6 +11,7 @@ import {
 // Import assets
 import logoVideo from "../assets/BakenBite.mp4";
 import logoImage from "../assets/bake n bite.jpg";
+import { Link } from "react-router-dom";
 
 // TikTok Official Icon
 const TikTokIcon = ({ size = 22, className = "" }) => (
@@ -37,7 +37,7 @@ const XIcon = ({ size = 22, className = "" }) => (
     fill="currentColor"
     className={className}
   >
-    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.77l-5.214-6.817-5.96 6.817H2.29l7.73-8.838L1.75 2.25H7.48l4.713 6.231 6.05-6.231zm-1.16 17.52h1.833L7.084 4.126H5.117l11.967 15.644z"/>
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.77l-5.214-6.817-5.96 6.817H2.29l7.73-8.838L1.75 2.25H7.48l4.713 6.231 6.05-6.231zm-1.16 17.52h1.833L7.084 4.126H5.117l11.967 15.644z" />
   </svg>
 );
 
@@ -97,10 +97,9 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
           <ul className="space-y-2 text-sm">
-            <li><a href="/" className="hover:text-yellow-200">Home</a></li>
-            <li><a href="/about" className="hover:text-yellow-200">About</a></li>
-            <li><a href="/menu" className="hover:text-yellow-200">Menu</a></li>
-            <li><a href="/contact" className="hover:text-yellow-200">Contact</a></li>
+            <li><Link to="/" className="hover:text-yellow-200">Home</Link></li>
+            <li><Link to="/about" className="hover:text-yellow-200">About</Link></li>
+            <li><Link to="/contact" className="hover:text-yellow-200">Contact</Link></li>
           </ul>
         </div>
 
@@ -108,10 +107,26 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold mb-4">Our Specialties</h3>
           <ul className="space-y-2 text-sm opacity-90">
-            <li>Cakes & Pastries</li>
-            <li>Milkshakes & Smoothies</li>
-            <li>Burgers & Fries</li>
-            <li>Custom Orders</li>
+            <li>
+              <Link to="/products" className="hover:text-yellow-200">
+                Cakes & Pastries
+              </Link>
+            </li>
+            <li>
+              <Link to="/products" className="hover:text-yellow-200">
+                Milkshakes & Smoothies
+              </Link>
+            </li>
+            <li>
+              <Link to="/products" className="hover:text-yellow-200">
+                Burgers & Fries
+              </Link>
+            </li>
+            <li>
+              <Link to="/products" className="hover:text-yellow-200">
+                Custom Orders
+              </Link>
+            </li>
           </ul>
         </div>
 

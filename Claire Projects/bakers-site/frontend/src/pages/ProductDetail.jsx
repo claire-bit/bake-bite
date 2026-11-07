@@ -1,20 +1,130 @@
-// src/pages/ProductDetail.jsx
 import React, { useState } from "react";
-import { useCart } from "../context/CartContext"; // 👈 import
+import { useParams } from "react-router-dom";
+import { useCart } from "../context/CartContext";
+
+// Import your cake images
+import img1 from "../assets/1.jpg";
+import img2 from "../assets/2.jpg";
+import img3 from "../assets/3.jpg";
+import img4 from "../assets/4.jpg";
+import img5 from "../assets/5.jpg";
+import img6 from "../assets/6.jpg";
+import img7 from "../assets/7.jpg";
+import img8 from "../assets/8.jpg";
+import img9 from "../assets/9.jpg";
+import img10 from "../assets/10.jpg";
+import img11 from "../assets/11.jpg";
+import img12 from "../assets/12.jpg";
+
+const allProducts = [
+  {
+    id: 1,
+    name: "Vanilla Bean Bliss",
+    price: 1100,
+    image: img1,
+    description:
+      "A light, buttery vanilla sponge layered with whipped cream and topped with white chocolate curls.",
+  },
+  {
+    id: 2,
+    name: "Dark Chocolate Truffle",
+    price: 1300,
+    image: img2,
+    description:
+      "Rich, moist chocolate cake filled with smooth ganache and finished with a glossy truffle glaze.",
+  },
+  {
+    id: 3,
+    name: "Red Velvet Dream",
+    price: 1250,
+    image: img3,
+    description:
+      "Classic red velvet layers with creamy vanilla cheese frosting and a hint of cocoa.",
+  },
+  {
+    id: 4,
+    name: "Black Forest Fantasy",
+    price: 1400,
+    image: img4,
+    description:
+      "Chocolate sponge layered with whipped cream, cherries, and dark chocolate shavings.",
+  },
+  {
+    id: 5,
+    name: "Strawberry Delight",
+    price: 1200,
+    image: img5,
+    description:
+      "Fluffy vanilla layers filled with strawberry puree and fresh cream frosting.",
+  },
+  {
+    id: 6,
+    name: "Lemon Zest Cake",
+    price: 1150,
+    image: img6,
+    description:
+      "Tangy lemon sponge paired with sweet buttercream and a light sugar glaze.",
+  },
+  {
+    id: 7,
+    name: "Carrot Walnut Cake",
+    price: 1350,
+    image: img7,
+    description:
+      "Moist carrot cake spiced with cinnamon and nutmeg, topped with cream cheese frosting.",
+  },
+  {
+    id: 8,
+    name: "Mocha Espresso Indulgence",
+    price: 1450,
+    image: img8,
+    description:
+      "A perfect balance of coffee and cocoa in a rich, decadent layered cake.",
+  },
+  {
+    id: 9,
+    name: "Pineapple Paradise",
+    price: 1200,
+    image: img9,
+    description:
+      "Light pineapple-infused sponge with whipped cream and tropical fruit toppings.",
+  },
+  {
+    id: 10,
+    name: "Oreo Cookies & Cream",
+    price: 1500,
+    image: img10,
+    description:
+      "Chocolate cake layers filled with Oreo crumbs and cream frosting for cookie lovers.",
+  },
+  {
+    id: 11,
+    name: "Blueberry Cheesecake",
+    price: 1600,
+    image: img11,
+    description:
+      "Creamy cheesecake with a buttery crust, topped with sweet blueberry compote.",
+  },
+  {
+    id: 12,
+    name: "Ferrero Rocher Fantasy",
+    price: 1800,
+    image: img12,
+    description:
+      "Hazelnut sponge filled with chocolate cream and crushed Ferrero Rocher pieces.",
+  },
+];
 
 export default function ProductDetail() {
-  const { addToCart } = useCart(); // 👈 use global cart
+  const { id } = useParams();
+  const { addToCart } = useCart();
   const [quantity, setQuantity] = useState(1);
 
-  // Dummy product (later you’ll fetch by ID from backend)
-  const product = {
-    id: 1,
-    name: "Chocolate Cake",
-    price: 1200,
-    description:
-      "Delicious rich chocolate cake layered with smooth frosting. Perfect for birthdays, weddings, or just a sweet treat.",
-    images: ["/assets/cake.jpg", "/assets/cake2.jpg"],
-  };
+  const product = allProducts.find((p) => p.id === Number(id));
+
+  if (!product) {
+    return <p className="text-center text-gray-600 mt-20">Product not found.</p>;
+  }
 
   const handleAddToCart = () => {
     addToCart(product, quantity);
@@ -24,23 +134,13 @@ export default function ProductDetail() {
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        {/* Images */}
+        {/* Image */}
         <div>
           <img
-            src={product.images[0]}
+            src={product.image}
             alt={product.name}
             className="w-full rounded-xl shadow-lg mb-4"
           />
-          <div className="flex gap-4">
-            {product.images.map((img, index) => (
-              <img
-                key={index}
-                src={img}
-                alt="thumb"
-                className="w-24 h-24 object-cover rounded-lg border hover:scale-105 transition"
-              />
-            ))}
-          </div>
         </div>
 
         {/* Info */}
@@ -53,7 +153,7 @@ export default function ProductDetail() {
           </p>
           <p className="text-gray-700 mb-6">{product.description}</p>
 
-          {/* Quantity Selector */}
+          {/* Quantity */}
           <div className="flex items-center gap-4 mb-6">
             <label className="font-medium">Quantity:</label>
             <input
@@ -72,27 +172,6 @@ export default function ProductDetail() {
           >
             Add to Cart
           </button>
-
-          {/* Reviews */}
-          <div className="mt-10">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-              Customer Reviews
-            </h2>
-            <div className="space-y-4">
-              <div className="border p-4 rounded-lg">
-                <p className="text-gray-700">
-                  ⭐⭐⭐⭐⭐ “Absolutely delicious! The best chocolate cake I’ve ever had.”
-                </p>
-                <span className="text-sm text-gray-500">– Jane</span>
-              </div>
-              <div className="border p-4 rounded-lg">
-                <p className="text-gray-700">
-                  ⭐⭐⭐⭐ “Very tasty and moist, but a bit too sweet for me.”
-                </p>
-                <span className="text-sm text-gray-500">– Mark</span>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

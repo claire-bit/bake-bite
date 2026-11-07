@@ -1,12 +1,16 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
+
 // Import assets
+import api from "../api/axios/";
 import logoVideo from "../assets/BakenBite.mp4";
 import logoImage from "../assets/bake n bite.jpg";
 
+
 const Register = () => {
+const navigate = useNavigate();
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -56,20 +60,27 @@ const Register = () => {
       return;
     }
 
-    try {
-      await new Promise((res) => setTimeout(res, 1000));
-      toast.success("Registration successful 🎉");
-      setFormData({
-        first_name: "",
-        last_name: "",
-        email: "",
-        password: "",
-        confirm_password: "",
-        termsAccepted: false,
-        rememberMe: false,
+        try {
+      await api.post("users/register/", {
+        first_name: formData.first_name.trim(),
+        last_name: formData.last_name.trim(),
+        email: formData.email.trim().toLowerCase(),
+        password: formData.password,
       });
-    } catch {
-      toast.error("Something went wrong. Try again.");
+      toast.success("Account created! Check your email to verify it.");
+      setTimeout(() => navigate("/login"), 1500);
+    } catch (err) {
+      const data = err.response?.data;
+      if (data && typeof data === "object") {
+        const fieldErrors = {};
+        Object.entries(data).forEach(([key, val]) => {
+          fieldErrors[key] = Array.isArray(val) ? val.join(" ") : String(val);
+        });
+        setErrors(fieldErrors);
+        toast.error("Please fix the highlighted fields.");
+      } else {
+        toast.error("Something went wrong. Try again.");
+      }
     } finally {
       setIsLoading(false);
     }

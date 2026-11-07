@@ -1,4 +1,3 @@
-// src/App.jsx
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
@@ -10,6 +9,9 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import VerifyEmail from "./pages/VerifyEmail";
+import Products from "./pages/Products"; // ✅ added
+import ProductDetail from "./pages/ProductDetail"; // ✅ added
 
 export default function App() {
   return (
@@ -20,11 +22,17 @@ export default function App() {
       {/* Main content */}
       <main className="flex-grow p-6">
         <Routes>
+          {/* Core site routes */}
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/verify/:uid/:token" element={<VerifyEmail />} />
+
+          {/* 🧁 Product pages */}
+          <Route path="/products" element={<Products />} />
+          <Route path="/products/:id" element={<ProductDetail />} />
         </Routes>
       </main>
 

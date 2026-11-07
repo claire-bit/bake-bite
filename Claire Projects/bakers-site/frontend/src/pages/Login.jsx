@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import api, { saveTokens } from "../api/axios";
 
 // Import assets
 import logoVideo from "../assets/BakenBite.mp4";
 import logoImage from "../assets/bake n bite.jpg";
 
+
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -34,12 +37,21 @@ const Login = () => {
       return;
     }
 
-    try {
-      await new Promise((res) => setTimeout(res, 1000));
-      toast.success("Login successful 🎉");
-      setFormData({ email: "", password: "", rememberMe: false });
-    } catch {
-      toast.error("Something went wrong. Try again.");
+        try {
+      const { data } = await api.post("users/login/", {
+        email: formData.email.trim().toLowerCase(),
+        password: formData.password,
+      });
+      saveTokens(data, formData.rememberMe);
+      toast.success("Welcome back! 🎉");
+      navigate("/");
+    } catch (err) {
+      const status = err.response?.status;
+      toast.error(
+        status === 401 || status === 400
+          ? err.response?.data?.detail || "Invalid email or password."
+          : "Something went wrong. Try again."
+      );
     } finally {
       setIsLoading(false);
     }
